@@ -1,5 +1,6 @@
 package com.haheskja.mtgpointtracker;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
@@ -11,6 +12,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Switch;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
@@ -44,10 +47,13 @@ public class MainActivity extends AppCompatActivity {
                         switch (menuItem.getItemId()) {
                             case R.id.nav_leagues:
                                 startLeagueFragment();
-                                return true;
+                                break;
                             case R.id.nav_rules:
                                 startRulesFragment();
-                                return true;
+                                break;
+                            case R.id.nav_logout:
+                                signOut();
+                                break;
                         }
                         return true;
                     }
@@ -75,6 +81,13 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.content_frame, firstFragment).commit();
         }
+    }
+
+    public void signOut(){
+        FirebaseAuth.getInstance().signOut();
+        Intent i = new Intent(this, LoginActivity.class);
+        startActivity(i);
+        finish();
     }
 
     public void startLeagueFragment(){

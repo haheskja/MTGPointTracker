@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#303030"
-    tools:context=".LoginActivity">
+    tools:context=".SignupActivity">
 
     <TextView
         android:id="@+id/title"
@@ -20,6 +20,20 @@
         app:layout_constraintStart_toStartOf="parent"
         />
 
+    <EditText
+        android:id="@+id/username"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/loginUsername"
+        app:layout_constraintBottom_toTopOf="@id/email"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:padding="16dp"
+        android:background="#1e1e1e"
+        android:textColor="#ffffff"
+        android:textColorHint="#ffffff"
+        android:layout_marginBottom="10dp"
+        />
     <EditText
         android:id="@+id/email"
         android:layout_width="300dp"
@@ -39,7 +53,7 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:hint="@string/loginPassword"
-        app:layout_constraintBottom_toTopOf="@id/loginbtn"
+        app:layout_constraintBottom_toTopOf="@id/signupbtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginBottom="18dp"
@@ -50,30 +64,17 @@
         />
 
     <Button
-        android:id="@+id/loginbtn"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/signupbtn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:text="@string/loginBtn"
-        android:background="#4286f4"
-        android:textColor="#ffffff"
-        android:layout_marginBottom="10dp"
-        android:onClick="logIn"
-        />
-    <Button
         android:id="@+id/signupbtn"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:text="@string/noUserBtn"
+        android:text="@string/signupBtn"
         android:background="#4286f4"
         android:textColor="#ffffff"
-        android:layout_marginBottom="80dp"
-        android:onClick="goToRegister"
+        android:layout_marginBottom="100dp"
+        android:onClick="signUp"
         />
 
 

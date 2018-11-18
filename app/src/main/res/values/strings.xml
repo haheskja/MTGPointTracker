@@ -1,8 +1,11 @@
 <resources>
     <string name="app_name">MTGPointTracker</string>
     <string name="loginUsername">Username</string>
+    <string name="loginEmail">Email</string>
     <string name="loginPassword">Password</string>
+    <string name="noUserBtn">Don\'t have an account yet?</string>
     <string name="loginBtn">Log in</string>
+    <string name="signupBtn">Sign up</string>
     <string name="leagues">Leagues</string>
     <string name="rules">Rules</string>
     <string name="friends">Friends</string>

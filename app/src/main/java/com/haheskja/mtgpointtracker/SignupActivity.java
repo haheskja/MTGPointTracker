@@ -1,9 +1,9 @@
 package com.haheskja.mtgpointtracker;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -15,56 +15,41 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class LoginActivity extends AppCompatActivity {
+public class SignupActivity extends AppCompatActivity {
     TextView username, email, password;
-    FirebaseAuth mAuth;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_signup);
 
-        //username = findViewById(R.id.username);
+        username = findViewById(R.id.username);
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
 
         mAuth = FirebaseAuth.getInstance();
+
+
         //textView = findViewById(R.id.textarea);
         //getJSON task = new getJSON();
         //task.execute(new String[]{"https://www.cs.hioa.no/~torunngj/jsonout.php"});
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        startApp(currentUser);
-    }
-
-    public void startApp(FirebaseUser currentUser){
-        if(currentUser != null){
-            //TODO pass the user to MainActivity
-            Intent i = new Intent(this, MainActivity.class);
-            startActivity(i);
-            finish();
-        }
-    }
-
-    public void checkCredentials(String email, String password){
-        mAuth.signInWithEmailAndPassword(email, password)
+    public void createAccout(String email, String password){
+        mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            Log.d("LogIn", "signInWithEmail:success");
+                            Log.d("createAccount", "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             startApp(user);
                         } else {
                             // If sign in fails, display a message to the user.
-                            Log.w("LogIn", "signInWithEmail:failure", task.getException());
-                            Toast.makeText(LoginActivity.this, "Authentication failed.",
+                            Log.w("createAccount", "createUserWithEmail:failure", task.getException());
+                            Toast.makeText(SignupActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                             startApp(null);
                         }
@@ -73,16 +58,24 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
 
+
     }
 
-    public void logIn(View v){
-        checkCredentials(email.getText().toString(), password.getText().toString());
+    public void startApp(FirebaseUser currentUser){
+        if(currentUser != null){
+            //TODO pass user to MainActivity
+            Intent i = new Intent(this, MainActivity.class);
+            startActivity(i);
+            finish();
         }
-
-    public void goToRegister(View view){
-        Intent i = new Intent(this, SignupActivity.class);
-        startActivity(i);
     }
+
+    public void signUp(View v){
+        createAccout(email.getText().toString(), password.getText().toString());
+    }
+
+
+
 
     /*private class getJSON extends AsyncTask<String, Void,String> {
         JSONObject jsonObject;
