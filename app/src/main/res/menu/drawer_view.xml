@@ -2,6 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/nav_game"
+            android:icon="@drawable/baseline_settings_white_36"
+            android:title="@string/game" />
+        <item
             android:id="@+id/nav_leagues"
             android:icon="@drawable/baseline_settings_white_36"
             android:title="@string/leagues" />

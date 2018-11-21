@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#303030"
+    tools:context=".LeagueNewActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        style="@style/Toolbar"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+
+        <TextView
+            style="@style/ToolbarTitle"
+            android:text="Add a league"
+            />
+
+    </android.support.v7.widget.Toolbar>
+
+    <TextView
+        android:id="@+id/show_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="League name"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        style="@style/LabelText"
+        />
+    <EditText
+        android:id="@+id/input_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/show_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        style="@style/InputBoxes"
+        />
+    <TextView
+        android:id="@+id/show_par"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Participants"
+        app:layout_constraintTop_toBottomOf="@id/input_name"
+        app:layout_constraintStart_toStartOf="parent"
+        style="@style/LabelText"
+        />
+    <EditText
+        android:id="@+id/input_par_1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Participant 1 (your username)"
+        app:layout_constraintTop_toBottomOf="@id/show_par"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        style="@style/InputBoxes"
+
+        />
+    <EditText
+        android:id="@+id/input_par_2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Participant 2 (their username)"
+        app:layout_constraintTop_toBottomOf="@id/input_par_1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        style="@style/InputBoxes"
+
+        />
+    <EditText
+        android:id="@+id/input_par_3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Participant 3 (their username)"
+        app:layout_constraintTop_toBottomOf="@id/input_par_2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        style="@style/InputBoxes"
+
+        />
+    <EditText
+        android:id="@+id/input_par_4"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Participant 4 (their username)"
+        app:layout_constraintTop_toBottomOf="@id/input_par_3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        style="@style/InputBoxes"
+
+        />
+
+    <Button
+        android:id="@+id/btn"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="18dp"
+        android:background="#4286f4"
+        android:onClick="createLeague"
+        android:text="Create"
+        android:textColor="#ffffff"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/input_par_4" />
+
+
+</android.support.constraint.ConstraintLayout>

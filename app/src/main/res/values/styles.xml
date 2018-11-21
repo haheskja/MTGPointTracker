@@ -7,6 +7,27 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+    <style name="LabelText">
+        <item name="android:layout_marginTop">18dp</item>
+        <item name="android:layout_marginLeft">16dp</item>
+    </style>
+    <style name="LeaderboardText">
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:layout_marginLeft">16dp</item>
+        <item name="android:padding">16dp</item>
+        <item name="android:background">#1e1e1e</item>
+    </style>
+    <style name="InputBoxes">
+        <item name="android:layout_marginLeft">16dp</item>
+        <item name="android:layout_marginRight">16dp</item>
+        <item name="android:layout_marginTop">4dp</item>
+        <item name="android:labelTextSize">14sp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:padding">16dp</item>
+        <item name="android:background">#1e1e1e</item>
+        <item name="android:textColorHint">#ffffff</item>
+        <item name="android:textColor">#ffffff</item>
+    </style>
     <style name="Toolbar" parent="AppTheme">
         <item name="android:background">@color/colorPrimary</item>
         <item name="android:layout_width">match_parent</item>

@@ -6,6 +6,7 @@
     <string name="noUserBtn">Don\'t have an account yet?</string>
     <string name="loginBtn">Log in</string>
     <string name="signupBtn">Sign up</string>
+    <string name="game">Game</string>
     <string name="leagues">Leagues</string>
     <string name="rules">Rules</string>
     <string name="friends">Friends</string>
@@ -13,15 +14,4 @@
     <string name="about">About</string>
     <string name="logout">Log out</string>
 
-    <string-array name="Planets">
-        <item>Sun</item>
-        <item>Mercury</item>
-        <item>Venus</item>
-        <item>Earth</item>
-        <item>Mars</item>
-        <item>Jupiter</item>
-        <item>Saturn</item>
-        <item>Uranus</item>
-        <item>Neptune</item>
-    </string-array>
 </resources>

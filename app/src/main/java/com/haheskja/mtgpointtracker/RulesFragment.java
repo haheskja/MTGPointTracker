@@ -1,15 +1,27 @@
 package com.haheskja.mtgpointtracker;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class RulesFragment extends Fragment {
     EditText et;
+    public static final String TAG = "RulesFragment";
+
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -17,6 +29,7 @@ public class RulesFragment extends Fragment {
 
         et = getActivity().findViewById(R.id.password);
         et.setText("Some text");
+
 
     }
 

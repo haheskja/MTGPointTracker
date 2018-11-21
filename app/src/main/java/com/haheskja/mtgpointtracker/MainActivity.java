@@ -10,6 +10,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Switch;
 
@@ -47,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
                         switch (menuItem.getItemId()) {
                             case R.id.nav_leagues:
                                 startLeagueFragment();
+                                break;
+                            case R.id.nav_game:
+                                startGameFragment();
                                 break;
                             case R.id.nav_rules:
                                 startRulesFragment();
@@ -120,13 +124,39 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
     }
 
+    public void startGameFragment(){
+        // Create fragment and give it an argument specifying the article it should show
+        GameFragment newFragment = new GameFragment();
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        // Replace whatever is in the fragment_container view with this fragment,
+        // and add the transaction to the back stack so the user can navigate back
+        transaction.replace(R.id.content_frame, newFragment);
+        transaction.addToBackStack(null);
+
+        // Commit the transaction
+        transaction.commit();
+    }
+
+    public void createLeague(){
+        Intent i = new Intent(this, LeagueNewActivity.class);
+        startActivity(i);
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu){
+        return true;
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 mDrawerLayout.openDrawer(GravityCompat.START);
-                return true;
-
+                break;
+            case R.id.menu_add:
+                createLeague();
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

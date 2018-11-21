@@ -44,7 +44,6 @@ public class LoginActivity extends AppCompatActivity {
 
     public void startApp(FirebaseUser currentUser){
         if(currentUser != null){
-            //TODO pass the user to MainActivity
             Intent i = new Intent(this, MainActivity.class);
             startActivity(i);
             finish();

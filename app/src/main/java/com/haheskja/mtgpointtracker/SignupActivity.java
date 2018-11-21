@@ -14,10 +14,15 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class SignupActivity extends AppCompatActivity {
     TextView username, email, password;
     private FirebaseAuth mAuth;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +41,7 @@ public class SignupActivity extends AppCompatActivity {
         //task.execute(new String[]{"https://www.cs.hioa.no/~torunngj/jsonout.php"});
     }
 
-    public void createAccout(String email, String password){
+    public void createAccount(final String username, final String email, final String password){
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -45,6 +50,10 @@ public class SignupActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("createAccount", "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+                            Map<String, Object> dbUser = new HashMap<>();
+                            dbUser.put("username", username);
+                            dbUser.put("email", email);
+                            db.collection("users").document(user.getUid()).set(dbUser);
                             startApp(user);
                         } else {
                             // If sign in fails, display a message to the user.
@@ -63,7 +72,6 @@ public class SignupActivity extends AppCompatActivity {
 
     public void startApp(FirebaseUser currentUser){
         if(currentUser != null){
-            //TODO pass user to MainActivity
             Intent i = new Intent(this, MainActivity.class);
             startActivity(i);
             finish();
@@ -71,58 +79,7 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     public void signUp(View v){
-        createAccout(email.getText().toString(), password.getText().toString());
+        createAccount(username.getText().toString(), email.getText().toString(), password.getText().toString());
     }
-
-
-
-
-    /*private class getJSON extends AsyncTask<String, Void,String> {
-        JSONObject jsonObject;
-
-        @Override
-        protected String doInBackground(String... urls) {
-            String retur = "";
-            String s = "";
-            String output = "";
-            for (String url : urls) {
-                try{
-                    URL urlen = new URL(urls[0]);
-                    HttpURLConnection conn = (HttpURLConnection)urlen.openConnection();
-                    conn.setRequestMethod("GET");
-                    conn.setRequestProperty("Accept", "application/json");
-                    if(conn.getResponseCode() != 200) {
-                        throw new RuntimeException("Failed: HTTP errorcode: " + conn.getResponseCode());
-                    }
-                    BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
-                    System.out.println("Output from Server .... \n");
-                    while((s = br.readLine()) != null) {
-                        output = output + s;
-                    }
-                    conn.disconnect();
-                    try{
-                        //Where info should be put into objects
-                        JSONArray mat = new JSONArray(output);
-                        for (int i = 0; i < mat.length(); i++) {
-                            JSONObject jsonobject = mat.getJSONObject(i);
-                            String name = jsonobject.getString("name");
-                            retur = retur + name+ "\n";
-                        }
-                        return retur;
-                    }
-                    catch(JSONException e) {e.printStackTrace();
-                    }
-                    return retur;
-                } catch(Exception e) {
-                    return "Noe gikk feil";
-                }
-            }
-            return retur;
-        }
-        @Override
-        protected void onPostExecute(String ss) {
-            textView.setText(ss);}
-    }
-    */
 }
 
