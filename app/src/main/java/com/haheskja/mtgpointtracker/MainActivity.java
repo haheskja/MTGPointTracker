@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Switch;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -50,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
                                 startLeagueFragment();
                                 break;
                             case R.id.nav_game:
-                                startGameFragment();
+                                startGameFragment(null);
                                 break;
                             case R.id.nav_rules:
                                 startRulesFragment();
@@ -124,19 +125,51 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
     }
 
-    public void startGameFragment(){
-        // Create fragment and give it an argument specifying the article it should show
+    public void startGameFragment(Intent data){
         GameFragment newFragment = new GameFragment();
+        if(data != null){
+            Bundle bundle = new Bundle();
+
+            //Forward league name, id and gamenumber
+            bundle.putString("LeagueName", data.getStringExtra("LeagueName"));
+            bundle.putString("LeagueId", data.getStringExtra("LeagueId"));
+            bundle.putInt("GameNum", data.getIntExtra("GameNum", 0));
+
+            //Forward player username
+            bundle.putString("Par1", data.getStringExtra("Par1"));
+            bundle.putString("Par2", data.getStringExtra("Par2"));
+            bundle.putString("Par3", data.getStringExtra("Par3"));
+            bundle.putString("Par4", data.getStringExtra("Par4"));
+
+            //Forward players totalscore
+            bundle.putInt("Totalscore1", data.getIntExtra("Totalscore1", 0));
+            bundle.putInt("Totalscore2", data.getIntExtra("Totalscore2", 0));
+            bundle.putInt("Totalscore3", data.getIntExtra("Totalscore3", 0));
+            bundle.putInt("Totalscore4", data.getIntExtra("Totalscore4", 0));
+
+            newFragment.setArguments(bundle);
+        }
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
-        // Replace whatever is in the fragment_container view with this fragment,
-        // and add the transaction to the back stack so the user can navigate back
         transaction.replace(R.id.content_frame, newFragment);
         transaction.addToBackStack(null);
 
         // Commit the transaction
         transaction.commit();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode,resultCode,data);
+        if(requestCode == 555){
+            if(resultCode==RESULT_OK){
+                startGameFragment(data);
+            }
+            if(resultCode==RESULT_CANCELED){
+                Toast.makeText(MainActivity.this,  "Request canceled.", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     public void createLeague(){

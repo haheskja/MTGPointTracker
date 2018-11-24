@@ -1,9 +1,13 @@
 package com.haheskja.mtgpointtracker;
 
 import android.app.ActionBar;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
+import android.support.constraint.ConstraintSet;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -33,7 +37,11 @@ import java.util.Map;
 public class LeagueInfoActivity extends AppCompatActivity {
     private static final String TAG = "LeagueInfoActivity";
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-    TextView usr_1, usr_2, usr_3, usr_4, score_1, score_2, score_3, score_4, toolbartitle;
+    TextView usr_1, usr_2, usr_3, usr_4, score_1, score_2, score_3, score_4, toolbartitle, game1;
+    List<String> list;
+    League league;
+    Game game;
+    ConstraintLayout cl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +67,7 @@ public class LeagueInfoActivity extends AppCompatActivity {
         score_4 = findViewById(R.id.leaderboard_score_4);
         toolbartitle = findViewById(R.id.toolbartitle);
         toolbartitle.setText(getIntent().getStringExtra("LeagueName"));
-
+        cl = findViewById(R.id.cl);
         getLeague();
     }
 
@@ -68,14 +76,29 @@ public class LeagueInfoActivity extends AppCompatActivity {
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                League league = documentSnapshot.toObject(League.class);
-                updateUI(league);
+                League newLeague = documentSnapshot.toObject(League.class);
+                league = newLeague;
+                getGames();
             }
         });
     }
 
-    public void updateUI(League league){
-        List<String> list = league.getParticipants();
+    public void getGames(){
+        DocumentReference docRef = db.collection("leagues").document(getIntent().getStringExtra("LeagueId")).
+                collection("games").document("game1");
+        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                Game newGame = documentSnapshot.toObject(Game.class);
+                newGame.setId(documentSnapshot.getId());
+                game = newGame;
+                updateUI();
+            }
+        });
+    }
+
+    public void updateUI(){
+        list = league.getParticipants();
         List<Integer> scorelist = league.getTotalscore();
 
         usr_1.setText(list.get(0));
@@ -89,8 +112,39 @@ public class LeagueInfoActivity extends AppCompatActivity {
         score_4.setText(scorelist.get(3).toString());
     }
 
-    public void addGame(){
+        /*public void createGameList(){
+        TextView game2 = new TextView(this);
+        game2.setId(View.generateViewId());
+        ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(0,
+                ConstraintLayout.LayoutParams.WRAP_CONTENT);
+        params.setMargins(100, 20, 0, 0);
+        game2.setLayoutParams(params);
+        game2.setText(game.getId());
+        game2.setBackgroundColor(ContextCompat.getColor(this, R.color.darkGray)); // hex color 0xAARRGGBB
+        game2.setPadding(80, 20, 20, 20);// in pixels (left, top, right, bottom)
 
+        cl.addView(game2);
+
+
+        ConstraintSet constraintSet = new ConstraintSet();
+        constraintSet.clone(cl);
+        constraintSet.connect(game2.getId(),ConstraintSet.TOP,R.id.leaderboard_name_4,ConstraintSet.BOTTOM,0);
+        constraintSet.connect(game2.getId(),ConstraintSet.START,cl.getId(),ConstraintSet.START,0);
+        constraintSet.connect(game2.getId(),ConstraintSet.END,cl.getId(),ConstraintSet.END,0);
+        constraintSet.applyTo(cl);
+
+    }*/
+
+
+    public void startGame(){
+        Intent i = new Intent();
+        i.putExtra("LeagueName", getIntent().getStringExtra("LeagueName"));
+        i.putExtra("Par1", list.get(0));
+        i.putExtra("Par2", list.get(1));
+        i.putExtra("Par3", list.get(2));
+        i.putExtra("Par4", list.get(3));
+        setResult(Activity.RESULT_OK, i);
+        finish();
     }
 
 
@@ -106,7 +160,7 @@ public class LeagueInfoActivity extends AppCompatActivity {
                 finish();
                 break;
             case R.id.menu_add:
-                addGame();
+                startGame();
                 break;
         }
         return super.onOptionsItemSelected(item);

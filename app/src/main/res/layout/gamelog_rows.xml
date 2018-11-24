@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="4dp">
+    <TextView
+        android:id="@+id/gameNum"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="Game1"
+        android:textSize="18sp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="16dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+    <TextView
+        android:id="@+id/gameWin"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Winner"
+        app:layout_constraintStart_toEndOf="@id/guideline"
+        app:layout_constraintBottom_toBottomOf="@id/gameNum"
+        android:textAlignment="center"
+        />
+    <TextView
+        android:id="@+id/par_1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Player 1"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/gameNum"
+        android:textAlignment="center"
+        />
+    <TextView
+        android:id="@+id/par_2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Player 2"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/par_1"
+        android:textAlignment="center"
+        />
+
+    <TextView
+        android:id="@+id/par_3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Player 3"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="@id/guideline"
+        app:layout_constraintTop_toBottomOf="@id/gameWin"
+        android:textAlignment="center"
+        />
+    <TextView
+        android:id="@+id/par_4"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Player 4"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="@id/guideline"
+        app:layout_constraintTop_toBottomOf="@id/par_3"
+        android:textAlignment="center"
+        />
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+
+
+</android.support.constraint.ConstraintLayout>

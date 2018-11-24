@@ -7,10 +7,116 @@
     android:background="#303030"
     tools:context=".GameFragment">
 
+    <TextView
+        android:id="@+id/noCurrentGame"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="No game in progress, go to a league and add a new game"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:padding="20dp"
+        />
 
+    <TextView
+        android:id="@+id/par_1_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Player 1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        style="@style/PlayerText"
+        />
+    <Button
+        style="@style/GameButtons"
+        android:id="@+id/par_1_point_btn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:text="0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/ver_guideline"
+        app:layout_constraintTop_toBottomOf="@id/par_1_name"
+        app:layout_constraintBottom_toTopOf="@id/hor_guideline"
+        />
+    <TextView
+        android:id="@+id/par_2_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Player 2"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="@id/ver_guideline"
+        style="@style/PlayerText"
+        />
+    <Button
+        style="@style/GameButtons"
+        android:id="@+id/par_2_point_btn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:text="0"
+        app:layout_constraintStart_toStartOf="@id/ver_guideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/par_2_name"
+        app:layout_constraintBottom_toTopOf="@id/hor_guideline"
+        />
+    <TextView
+        android:id="@+id/par_3_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Player 3"
+        app:layout_constraintTop_toTopOf="@id/hor_guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        style="@style/PlayerText"
+        />
+    <Button
+        style="@style/GameButtons"
+        android:id="@+id/par_3_point_btn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:text="0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/ver_guideline"
+        app:layout_constraintTop_toBottomOf="@id/par_3_name"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+    <TextView
+        android:id="@+id/par_4_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Player 4"
+        app:layout_constraintTop_toTopOf="@id/hor_guideline"
+        app:layout_constraintStart_toStartOf="@id/ver_guideline"
+        style="@style/PlayerText"
+        />
+    <Button
+        style="@style/GameButtons"
+        android:id="@+id/par_4_point_btn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:text="0"
+        app:layout_constraintStart_toStartOf="@id/ver_guideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/par_4_name"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
 
-
-
+    <android.support.constraint.Guideline
+        android:id="@+id/ver_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+    <android.support.constraint.Guideline
+        android:id="@+id/hor_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
 
 
 </android.support.constraint.ConstraintLayout>

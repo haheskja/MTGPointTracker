@@ -53,6 +53,7 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:hint="@string/loginPassword"
+        android:inputType="textPassword"
         app:layout_constraintBottom_toTopOf="@id/signupbtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -37,6 +37,12 @@
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
+        <activity android:name=".GameLog">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+
         <activity android:name=".LeagueNewActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

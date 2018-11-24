@@ -80,10 +80,11 @@ public class LeagueFragment extends ListFragment{
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         //Toast.makeText(getActivity(), "Item: " + leagueList.get(position).getId(), Toast.LENGTH_SHORT).show();
-        Intent i = new Intent(getActivity(), LeagueInfoActivity.class);
+        Intent i = new Intent(getActivity(), GameLog.class);
+
         i.putExtra("LeagueId", leagueList.get(position).getId());
         i.putExtra("LeagueName", leagueList.get(position).getName());
-        startActivity(i);
+        getActivity().startActivityForResult(i, 555);
     }
 
     @Override

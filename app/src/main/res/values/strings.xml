@@ -6,7 +6,7 @@
     <string name="noUserBtn">Don\'t have an account yet?</string>
     <string name="loginBtn">Log in</string>
     <string name="signupBtn">Sign up</string>
-    <string name="game">Game</string>
+    <string name="game">Current game</string>
     <string name="leagues">Leagues</string>
     <string name="rules">Rules</string>
     <string name="friends">Friends</string>

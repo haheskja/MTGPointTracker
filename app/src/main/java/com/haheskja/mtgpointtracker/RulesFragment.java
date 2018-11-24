@@ -41,7 +41,4 @@ public class RulesFragment extends Fragment {
         return inflater.inflate(R.layout.rules, container, false);
     }
 
-    public void checkLogin(View v){
-        et.setText("Clicked");
-    }
 }
