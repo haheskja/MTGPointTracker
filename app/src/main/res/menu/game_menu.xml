@@ -3,6 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/menu_complete"
-        android:title="Done"
+        android:title="Finish"
+        />
+    <item
+        android:id="@+id/menu_undo"
+        android:title="Undo last action"
         />
 </menu>

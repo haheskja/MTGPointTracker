@@ -1,21 +1,35 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
-        <!-- Customize your theme here. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:colorBackground">@color/mainBackground</item>
+        <item name="android:navigationBarColor">@color/mainBackground</item>
+        <item name="android:actionOverflowButtonStyle">@style/AppTheme.OverFlow</item>
+    </style>
+    <style name="NoActionBar" parent="AppTheme">
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+    <style name="AppTheme.OverFlow">
+        <item name="android:src">@mipmap/baseline_more_vert_white_24</item>
+        <item name="android:paddingRight">10dp</item>
     </style>
     <style name="LabelText">
-        <item name="android:layout_marginTop">18dp</item>
+        <item name="android:layout_marginTop">16dp</item>
         <item name="android:layout_marginLeft">16dp</item>
+    </style>
+    <style name="LabelTextAlert">
+        <item name="android:layout_marginTop">16dp</item>
     </style>
     <style name="LeaderboardText">
         <item name="android:layout_marginTop">5dp</item>
         <item name="android:layout_marginLeft">16dp</item>
-        <item name="android:padding">16dp</item>
-        <item name="android:background">#1e1e1e</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:background">@color/boxesBackground</item>
     </style>
     <style name="InputBoxes">
         <item name="android:layout_marginLeft">16dp</item>
@@ -24,19 +38,25 @@
         <item name="android:labelTextSize">14sp</item>
         <item name="android:textSize">14sp</item>
         <item name="android:padding">16dp</item>
-        <item name="android:background">#1e1e1e</item>
-        <item name="android:textColorHint">#ffffff</item>
-        <item name="android:textColor">#ffffff</item>
+        <item name="android:background">@color/boxesBackground</item>
+        <item name="android:singleLine">true</item>
+    </style>
+    <style name="InputBoxesAlert">
+        <item name="android:layout_marginTop">4dp</item>
+        <item name="android:labelTextSize">14sp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:padding">16dp</item>
+        <item name="android:background">@color/boxesBackground</item>
+        <item name="android:singleLine">true</item>
     </style>
     <style name="Toolbar" parent="AppTheme">
         <item name="android:background">@color/colorPrimary</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:elevation">4dp</item>
         <item name="android:homeAsUpIndicator">@mipmap/baseline_arrow_back_white_36dp</item>
     </style>
     <style name="ToolbarTitle">
-        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textColor">@color/mainBackground</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">20sp</item>
@@ -50,8 +70,18 @@
     <style name="GameButtons">
         <item name="android:background">@android:color/transparent</item>
         <item name="android:textSize">60sp</item>
-        <item name="android:textColor">#ffffff</item>
+        <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:layout_margin">16dp</item>
-
+    </style>
+    <style name="ButtonStyleAccent">
+        <item name="android:background">@color/colorAccent</item>
+        <item name="android:textColor">@color/mainBackground</item>
+    </style>
+    <style name="LoginFields">
+        <item name="android:background">@color/colorPrimaryDark</item>
+        <item name="android:textColor">@color/mainBackground</item>
+        <item name="android:textColorHint">@color/mainBackground</item>
+        <item name="android:padding">16dp</item>
+        <item name="android:singleLine">true</item>
     </style>
 </resources>

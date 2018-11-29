@@ -4,8 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#303030"
+    android:background="@color/colorPrimary"
     tools:context=".LoginActivity">
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
+        android:src="@drawable/logo"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="30dp"
+        android:elevation="20dp"/>
 
     <TextView
         android:id="@+id/title"
@@ -13,9 +26,9 @@
         android:textColor="#ffffff"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="10dp"
         android:textSize="40sp"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/logo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         />
@@ -28,10 +41,7 @@
         app:layout_constraintBottom_toTopOf="@id/password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:padding="16dp"
-        android:background="#1e1e1e"
-        android:textColor="#ffffff"
-        android:textColorHint="#ffffff"
+        style="@style/LoginFields"
         android:layout_marginBottom="10dp"
         />
     <EditText
@@ -44,10 +54,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginBottom="18dp"
-        android:padding="16dp"
-        android:background="#1e1e1e"
-        android:textColorHint="#ffffff"
-        android:textColor="#ffffff"
+        style="@style/LoginFields"
         />
 
     <Button
@@ -58,8 +65,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:text="@string/loginBtn"
-        android:background="#4286f4"
-        android:textColor="#ffffff"
+        style="@style/ButtonStyleAccent"
         android:layout_marginBottom="10dp"
         android:onClick="logIn"
         />
@@ -71,9 +77,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:text="@string/noUserBtn"
-        android:background="#4286f4"
-        android:textColor="#ffffff"
-        android:layout_marginBottom="80dp"
+        style="@style/ButtonStyleAccent"
+        android:background="@android:color/transparent"
+        android:layout_marginBottom="40dp"
         android:onClick="goToRegister"
         />
 

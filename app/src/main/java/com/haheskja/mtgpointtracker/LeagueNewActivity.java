@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,6 +19,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -34,14 +36,19 @@ import java.util.Map;
 
 public class LeagueNewActivity extends AppCompatActivity {
     private static final String TAG = "LeagueNewActivity";
-    EditText leagueName, par_1, par_2, par_3, par_4;
+    EditText etLeagueName, par_2, par_3, par_4, num_games;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+    FirebaseAuth mAuth;
+    FirebaseUser user;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_leaguenew);
+
+        mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
 
         //Set the top toolbar as the actionbar
         android.support.v7.widget.Toolbar toolbar = findViewById(R.id.toolbar);
@@ -52,30 +59,65 @@ public class LeagueNewActivity extends AppCompatActivity {
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.mipmap.baseline_arrow_back_white_36dp);
 
-        leagueName = findViewById(R.id.input_name);
-        par_1 = findViewById(R.id.input_par_1);
+        etLeagueName = findViewById(R.id.input_name);
         par_2 = findViewById(R.id.input_par_2);
         par_3 = findViewById(R.id.input_par_3);
         par_4 = findViewById(R.id.input_par_4);
+        num_games = findViewById(R.id.input_games);
     }
 
-    public void createLeague(View view){
-        final String name = leagueName.getText().toString();
+    public void createLeagueButton(View view){
+        String par2 = par_2.getText().toString().trim();
+        String par3 = par_3.getText().toString().trim();
+        String par4 = par_4.getText().toString().trim();
+        String leagueName = etLeagueName.getText().toString().trim();
+        String numGames = num_games.getText().toString().trim();
+        String username = getSharedPreferences(user.getUid(), MODE_PRIVATE).getString("Username", "");
+
+        if(validate(leagueName, numGames, username, par2, par3, par4)){
+            createLeague(leagueName, numGames, username, par2, par3, par4);
+
+        }
+    }
+
+    public boolean validate(String leagueName, String numGames, String par1, String par2, String par3, String par4){
+        if(!TextUtils.isEmpty(par1) &&
+                !TextUtils.isEmpty(par2) &&
+                !TextUtils.isEmpty(par3) &&
+                !TextUtils.isEmpty(par4) &&
+                !TextUtils.isEmpty(leagueName) &&
+                !TextUtils.isEmpty(numGames)){
+            return true;
+        }
+        else{
+            Toast.makeText(this, "No fields can be blank.",
+                    Toast.LENGTH_SHORT).show();
+        }
+        return false;
+    }
+
+    public void goBack(){
+        MainActivity.dataChanged = true;
+        finish();
+    }
+
+    public void createLeague(final String leagueName, final String numGames, String par1, String par2, String par3, String par4){
         final List<String> participantList = new ArrayList<>();
         final List<String> participantIDList = new ArrayList<>();
+        final List<String> finalPartList = new ArrayList<>();
         final List<Integer> totalscore = new ArrayList<>();
         for(int i = 0; i < 4; i++){
             totalscore.add(0);
         }
-        participantList.add(par_1.getText().toString());
-        participantList.add(par_2.getText().toString());
-        participantList.add(par_3.getText().toString());
-        participantList.add(par_4.getText().toString());
+        participantList.add(par1);
+        participantList.add(par2);
+        participantList.add(par3);
+        participantList.add(par4);
 
-        Query firstQuery = db.collection("users").whereEqualTo("username", participantList.get(0));
-        Query secondQuery = db.collection("users").whereEqualTo("username", participantList.get(1));
-        Query thirdQuery = db.collection("users").whereEqualTo("username", participantList.get(2));
-        Query fourthQuery = db.collection("users").whereEqualTo("username", participantList.get(3));
+        Query firstQuery = db.collection("users").whereEqualTo("usernamenocaps", participantList.get(0).toLowerCase());
+        Query secondQuery = db.collection("users").whereEqualTo("usernamenocaps", participantList.get(1).toLowerCase());
+        Query thirdQuery = db.collection("users").whereEqualTo("usernamenocaps", participantList.get(2).toLowerCase());
+        Query fourthQuery = db.collection("users").whereEqualTo("usernamenocaps", participantList.get(3).toLowerCase());
 
         Task firstTask = firstQuery.get();
         Task secondTask = secondQuery.get();
@@ -89,35 +131,46 @@ public class LeagueNewActivity extends AppCompatActivity {
                     QuerySnapshot qs = (QuerySnapshot) query;
                     for(QueryDocumentSnapshot document : qs){
                         participantIDList.add(document.getId());
+                        finalPartList.add(document.getString("username"));
                     }
                 }
 
-                Map<String, Object> newLeague = new HashMap<>();
-                newLeague.put("name", name);
-                newLeague.put("participants", participantList);
-                newLeague.put("participantsid", participantIDList);
-                newLeague.put("totalscore", totalscore);
+                if(finalPartList.size() == participantList.size()){
+                    Map<String, Object> newLeague = new HashMap<>();
+                    newLeague.put("name", leagueName);
+                    newLeague.put("ongoing", true);
+                    newLeague.put("numgames", Integer.valueOf(numGames));
+                    newLeague.put("participants", finalPartList);
+                    newLeague.put("participantsid", participantIDList);
+                    newLeague.put("totalscore", totalscore);
 
 
-                db.collection("leagues")
-                        .add(newLeague)
-                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    db.collection("leagues")
+                            .add(newLeague)
+                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                @Override
+                                public void onSuccess(DocumentReference documentReference) {
+                                    Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                                    Toast.makeText(LeagueNewActivity.this, leagueName + " was added successfully.",
+                                            Toast.LENGTH_SHORT).show();
+                                    goBack();
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.w(TAG, "Error adding document", e);
+                                    Toast.makeText(LeagueNewActivity.this, "Couldn't add new league.",
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                            });
 
-                            @Override
-                            public void onSuccess(DocumentReference documentReference) {
-                                Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-                                Toast.makeText(LeagueNewActivity.this, name + " was added successfully.",
-                                        Toast.LENGTH_SHORT).show();
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.w(TAG, "Error adding document", e);
-                                Toast.makeText(LeagueNewActivity.this, "Couldn't add new league",
-                                        Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                }
+                else{
+                    Toast.makeText(LeagueNewActivity.this, "Could not find one or more usernames.",
+                            Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
     }
@@ -136,53 +189,5 @@ public class LeagueNewActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-    /*private class getJSON extends AsyncTask<String, Void,String> {
-        JSONObject jsonObject;
-
-        @Override
-        protected String doInBackground(String... urls) {
-            String retur = "";
-            String s = "";
-            String output = "";
-            for (String url : urls) {
-                try{
-                    URL urlen = new URL(urls[0]);
-                    HttpURLConnection conn = (HttpURLConnection)urlen.openConnection();
-                    conn.setRequestMethod("GET");
-                    conn.setRequestProperty("Accept", "application/json");
-                    if(conn.getResponseCode() != 200) {
-                        throw new RuntimeException("Failed: HTTP errorcode: " + conn.getResponseCode());
-                    }
-                    BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
-                    System.out.println("Output from Server .... \n");
-                    while((s = br.readLine()) != null) {
-                        output = output + s;
-                    }
-                    conn.disconnect();
-                    try{
-                        //Where info should be put into objects
-                        JSONArray mat = new JSONArray(output);
-                        for (int i = 0; i < mat.length(); i++) {
-                            JSONObject jsonobject = mat.getJSONObject(i);
-                            String name = jsonobject.getString("name");
-                            retur = retur + name+ "\n";
-                        }
-                        return retur;
-                    }
-                    catch(JSONException e) {e.printStackTrace();
-                    }
-                    return retur;
-                } catch(Exception e) {
-                    return "Noe gikk feil";
-                }
-            }
-            return retur;
-        }
-        @Override
-        protected void onPostExecute(String ss) {
-            textView.setText(ss);}
-    }
-    */
 }
 

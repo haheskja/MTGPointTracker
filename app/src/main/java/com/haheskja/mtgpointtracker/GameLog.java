@@ -1,6 +1,9 @@
 package com.haheskja.mtgpointtracker;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Person;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,14 +12,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -25,6 +32,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class GameLog extends AppCompatActivity {
@@ -34,13 +42,15 @@ public class GameLog extends AppCompatActivity {
     private RecyclerView.LayoutManager mLayoutManager;
     private ArrayList<Game> gameArrayList;
     FirebaseFirestore db;
+    private FirebaseAuth mAuth;
     League league;
-    TextView toolbarTitle;
+    TextView usr_1, usr_2, usr_3, usr_4, score_1, score_2, score_3, score_4, toolbarTitle, numGames, status;
     List<String> parList;
     List<Integer> totalScore;
-
-
-
+    String ongoing;
+    boolean isLoaded = false;
+    boolean isOngoing = false;
+    int gameNum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +58,7 @@ public class GameLog extends AppCompatActivity {
         setContentView(R.layout.activity_gamelog);
         mRecyclerView = findViewById(R.id.recycleView);
         db = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
 
         //Set the top toolbar as the actionbar
         android.support.v7.widget.Toolbar toolbar = findViewById(R.id.toolbar);
@@ -57,6 +68,18 @@ public class GameLog extends AppCompatActivity {
         android.support.v7.app.ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.mipmap.baseline_arrow_back_white_36dp);
+
+        //Define xml fields
+        usr_1 = findViewById(R.id.leaderboard_name_1);
+        usr_2 = findViewById(R.id.leaderboard_name_2);
+        usr_3 = findViewById(R.id.leaderboard_name_3);
+        usr_4 = findViewById(R.id.leaderboard_name_4);
+        score_1 = findViewById(R.id.leaderboard_score_1);
+        score_2 = findViewById(R.id.leaderboard_score_2);
+        score_3 = findViewById(R.id.leaderboard_score_3);
+        score_4 = findViewById(R.id.leaderboard_score_4);
+        numGames = findViewById(R.id.num_games);
+        status = findViewById(R.id.status);
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
@@ -85,6 +108,8 @@ public class GameLog extends AppCompatActivity {
                 League newLeague = documentSnapshot.toObject(League.class);
                 league = newLeague;
                 league.setId(documentSnapshot.getId());
+                isOngoing = league.isOngoing();
+
                 parList = league.getParticipants();
                 totalScore = league.getTotalscore();
                 getGames();
@@ -107,7 +132,8 @@ public class GameLog extends AppCompatActivity {
                                 gameArrayList.add(newGame);
                             }
                             mAdapter.notifyDataSetChanged();
-
+                            gameNum = gameArrayList.size();
+                            updateUI(sortLeaderboard());
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
@@ -115,15 +141,67 @@ public class GameLog extends AppCompatActivity {
                 });
     }
 
-    public void startGame(){
-        int gameNum = gameArrayList.size();
+    public void updateUI(List<User> user){
+        if(league.isOngoing()){
+            ongoing = "Ongoing";
+        }
+        else{
+            ongoing = "Completed";
+        }
+        status.setText(getString(R.string.gamelog_status, ongoing));
+        numGames.setText(getString(R.string.gamelog_num_games, gameNum, league.getNumgames()));
 
+        usr_1.setText(user.get(0).getUsername());
+        usr_2.setText(user.get(1).getUsername());
+        usr_3.setText(user.get(2).getUsername());
+        usr_4.setText(user.get(3).getUsername());
+
+        score_1.setText(String.valueOf(user.get(0).getScore()));
+        score_2.setText(String.valueOf(user.get(1).getScore()));
+        score_3.setText(String.valueOf(user.get(2).getScore()));
+        score_4.setText(String.valueOf(user.get(3).getScore()));
+        isLoaded = true;
+
+    }
+
+    public List<User> sortLeaderboard(){
+        List<User> user = new ArrayList<>();
+        for(int i = 0; i < 4; i++){
+            User newUser = new User(totalScore.get(i), parList.get(i));
+            user.add(newUser);
+        }
+        Collections.sort(user);
+        return user;
+    }
+
+    public void overwriteGameDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("You have a game in progress, are you sure you want to overwrite?");
+
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                startGameFragment();
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
+    }
+
+    public void startGameFragment(){
         Intent i = new Intent();
 
         //Send league name, id, and next gamenumber
         i.putExtra("LeagueName", getIntent().getStringExtra("LeagueName"));
         i.putExtra("LeagueId", league.getId());
         i.putExtra("GameNum", ++gameNum);
+        i.putExtra("NumGames", league.getNumgames());
 
         //Send players username
         i.putExtra("Par1", parList.get(0));
@@ -141,6 +219,17 @@ public class GameLog extends AppCompatActivity {
         finish();
     }
 
+    public void startGame(){
+        if(league.isOngoing()){
+            if(getSharedPreferences(mAuth.getCurrentUser().getUid(), MODE_PRIVATE).getBoolean("IsOngoing", false)){
+                overwriteGameDialog();
+            }
+            else{
+                startGameFragment();
+            }
+        }
+    }
+
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
@@ -153,7 +242,17 @@ public class GameLog extends AppCompatActivity {
                 finish();
                 break;
             case R.id.menu_add:
-                startGame();
+                if(isOngoing){
+                    startGame();
+                }
+                else if(!isLoaded){
+                    Toast.makeText(GameLog.this, "League is not loaded.",
+                            Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    Toast.makeText(GameLog.this, "League is completed.",
+                            Toast.LENGTH_SHORT).show();
+                }
                 break;
         }
         return super.onOptionsItemSelected(item);

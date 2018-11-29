@@ -33,13 +33,13 @@ public class GameLogAdapter extends RecyclerView.Adapter<GameLogAdapter.MyViewHo
             par_4 = v.findViewById(R.id.par_4);
         }
 
-        public void setDetails(Game game) {
+        public void setDetails(Context context, Game game) {
             gameNum.setText(game.getGamename());
-            gameWin.setText(game.getWinner());
-            par_1.setText(game.getParticipants().get(0));
-            par_2.setText(game.getParticipants().get(1));
-            par_3.setText(game.getParticipants().get(2));
-            par_4.setText(game.getParticipants().get(3));
+            gameWin.setText(context.getString(R.string.gamelog_winner, game.getWinner()));
+            par_1.setText(context.getString(R.string.gamelog_points, game.getParticipants().get(0), game.getScore().get(0)));
+            par_2.setText(context.getString(R.string.gamelog_points, game.getParticipants().get(1), game.getScore().get(1)));
+            par_3.setText(context.getString(R.string.gamelog_points, game.getParticipants().get(2), game.getScore().get(2)));
+            par_4.setText(context.getString(R.string.gamelog_points, game.getParticipants().get(3), game.getScore().get(3)));
 
         }
 
@@ -63,7 +63,7 @@ public class GameLogAdapter extends RecyclerView.Adapter<GameLogAdapter.MyViewHo
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Game game = games.get(position);
-        holder.setDetails(game);
+        holder.setDetails(context, game);
 
     }
 

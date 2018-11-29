@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#303030"
     tools:context=".GameFragment">
 
     <android.support.v7.widget.Toolbar
@@ -19,12 +18,144 @@
             />
     </android.support.v7.widget.Toolbar>
 
+
+
+    <TextView
+        android:id="@+id/status"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Status"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginRight="16dp"
+        android:textColor="@color/colorAccent"
+        app:layout_constraintBottom_toBottomOf="@id/show_name"
+        style="@style/LabelText"
+        />
+
+    <TextView
+        android:id="@+id/show_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Leaderboard"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintBottom_toBottomOf="@id/status"
+        app:layout_constraintStart_toStartOf="parent"
+        style="@style/LabelText"
+        />
+
+    <TextView
+        android:id="@+id/leaderboard_name_1"
+        style="@style/LeaderboardText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:text="Username"
+        app:layout_constraintBottom_toBottomOf="@id/leaderboard_score_1"
+        app:layout_constraintEnd_toStartOf="@+id/leaderboard_score_1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/show_name" />
+    <TextView
+        android:id="@+id/leaderboard_score_1"
+        style="@style/LeaderboardText"
+        android:layout_width="100dp"
+        android:layout_height="0dp"
+        android:text="Score"
+        android:gravity="end"
+        android:layout_marginRight="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/leaderboard_name_1"
+
+        app:layout_constraintTop_toBottomOf="@id/show_name"
+        />
+    <TextView
+        android:id="@+id/leaderboard_name_2"
+        style="@style/LeaderboardText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:text="Username"
+        app:layout_constraintEnd_toStartOf="@+id/leaderboard_score_1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/leaderboard_name_1"
+        />
+    <TextView
+        android:id="@+id/leaderboard_score_2"
+        style="@style/LeaderboardText"
+        android:layout_width="100dp"
+        android:layout_height="0dp"
+        android:text="Score"
+        android:gravity="end"
+        android:layout_marginRight="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/leaderboard_name_2"
+
+        app:layout_constraintTop_toBottomOf="@id/leaderboard_score_1"
+        />
+    <TextView
+        android:id="@+id/leaderboard_name_3"
+        style="@style/LeaderboardText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:text="Username"
+        app:layout_constraintEnd_toStartOf="@+id/leaderboard_score_3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/leaderboard_name_2"
+        />
+    <TextView
+        android:id="@+id/leaderboard_score_3"
+        style="@style/LeaderboardText"
+        android:layout_width="100dp"
+        android:layout_height="0dp"
+        android:text="Score"
+        android:gravity="end"
+        android:layout_marginRight="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/leaderboard_name_3"
+        app:layout_constraintTop_toBottomOf="@id/leaderboard_score_2"
+        />
+    <TextView
+        android:id="@+id/leaderboard_name_4"
+        style="@style/LeaderboardText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:text="Username"
+        app:layout_constraintEnd_toStartOf="@+id/leaderboard_score_4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/leaderboard_name_3"
+        />
+    <TextView
+        android:id="@+id/leaderboard_score_4"
+        style="@style/LeaderboardText"
+        android:layout_width="100dp"
+        android:layout_height="0dp"
+        android:text="Score"
+        android:gravity="end"
+        android:layout_marginRight="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/leaderboard_name_4"
+        app:layout_constraintTop_toBottomOf="@id/leaderboard_score_3"
+        />
+
+    <TextView
+        android:id="@+id/num_games"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Played 5/7 games"
+        app:layout_constraintTop_toBottomOf="@id/leaderboard_name_4"
+        app:layout_constraintStart_toStartOf="parent"
+        style="@style/LabelText"
+        />
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycleView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/num_games"
         app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@color/listBackground"
         >
 
     </android.support.v7.widget.RecyclerView>

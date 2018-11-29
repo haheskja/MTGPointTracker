@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,10 +16,16 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class LoginActivity extends AppCompatActivity {
+    private static final String TAG = "LoginActivity";
     TextView username, email, password;
     FirebaseAuth mAuth;
+    FirebaseFirestore db;
+
+    public static String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,9 +37,8 @@ public class LoginActivity extends AppCompatActivity {
         password = findViewById(R.id.password);
 
         mAuth = FirebaseAuth.getInstance();
-        //textView = findViewById(R.id.textarea);
-        //getJSON task = new getJSON();
-        //task.execute(new String[]{"https://www.cs.hioa.no/~torunngj/jsonout.php"});
+        db = FirebaseFirestore.getInstance();
+
     }
 
     @Override
@@ -44,14 +51,27 @@ public class LoginActivity extends AppCompatActivity {
 
     public void startApp(FirebaseUser currentUser){
         if(currentUser != null){
-            Intent i = new Intent(this, MainActivity.class);
+            Intent i = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(i);
             finish();
         }
     }
 
+    public void findUsername(final FirebaseUser user){
+        db.collection("users").document(user.getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    getSharedPreferences(user.getUid(), MODE_PRIVATE).edit().putString("Username", task.getResult().getString("username")).apply();
+                    Log.d(TAG, "Username: " + task.getResult().getString("username"));
+                    startApp(user);
+                }
+            }
+        });
+    }
+
     public void checkCredentials(String email, String password){
-        mAuth.signInWithEmailAndPassword(email, password)
+        mAuth.signInWithEmailAndPassword(email.toLowerCase(), password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -59,7 +79,7 @@ public class LoginActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("LogIn", "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            startApp(user);
+                            findUsername(user);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w("LogIn", "signInWithEmail:failure", task.getException());
@@ -75,60 +95,30 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void logIn(View v){
-        checkCredentials(email.getText().toString(), password.getText().toString());
+        if(validate()){
+            checkCredentials(email.getText().toString().trim(), password.getText().toString().trim());
         }
+
+    }
+
+    private boolean validate(){
+        if(!TextUtils.isEmpty(email.getText().toString().trim()) &&
+                !TextUtils.isEmpty(password.getText().toString().trim())){
+            return true;
+        }
+        else{
+            Toast.makeText(LoginActivity.this, "No fields can be blank.",
+                    Toast.LENGTH_SHORT).show();
+        }
+        return false;
+    }
+
 
     public void goToRegister(View view){
         Intent i = new Intent(this, SignupActivity.class);
         startActivity(i);
     }
 
-    /*private class getJSON extends AsyncTask<String, Void,String> {
-        JSONObject jsonObject;
 
-        @Override
-        protected String doInBackground(String... urls) {
-            String retur = "";
-            String s = "";
-            String output = "";
-            for (String url : urls) {
-                try{
-                    URL urlen = new URL(urls[0]);
-                    HttpURLConnection conn = (HttpURLConnection)urlen.openConnection();
-                    conn.setRequestMethod("GET");
-                    conn.setRequestProperty("Accept", "application/json");
-                    if(conn.getResponseCode() != 200) {
-                        throw new RuntimeException("Failed: HTTP errorcode: " + conn.getResponseCode());
-                    }
-                    BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
-                    System.out.println("Output from Server .... \n");
-                    while((s = br.readLine()) != null) {
-                        output = output + s;
-                    }
-                    conn.disconnect();
-                    try{
-                        //Where info should be put into objects
-                        JSONArray mat = new JSONArray(output);
-                        for (int i = 0; i < mat.length(); i++) {
-                            JSONObject jsonobject = mat.getJSONObject(i);
-                            String name = jsonobject.getString("name");
-                            retur = retur + name+ "\n";
-                        }
-                        return retur;
-                    }
-                    catch(JSONException e) {e.printStackTrace();
-                    }
-                    return retur;
-                } catch(Exception e) {
-                    return "Noe gikk feil";
-                }
-            }
-            return retur;
-        }
-        @Override
-        protected void onPostExecute(String ss) {
-            textView.setText(ss);}
-    }
-    */
 }
 

@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -33,11 +34,12 @@ import java.util.List;
 
 public class LeagueFragment extends ListFragment{
     private static final String TAG = "LeagueFragment";
+    TextView toolbarTitle;
     FirebaseFirestore db;
     FirebaseAuth mAuth;
-    List<League> leagueList = new ArrayList<>();
-    List<String> leagueStringList = new ArrayList<>();
-    List<Integer> scoreList = new ArrayList<>();
+    List<League> leagueList;
+    List<String> leagueStringList;
+    List<Integer> scoreList;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -47,28 +49,38 @@ public class LeagueFragment extends ListFragment{
         FirebaseUser user = mAuth.getCurrentUser();
 
 
-        db.collection("leagues")
-                .whereArrayContains("participantsid", user.getUid())
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                League league = document.toObject(League.class);
-                                league.setId(document.getId());
-                                leagueList.add(league);
-                                leagueStringList.add(league.getName());
-                                Log.d(TAG, league.getName() + " <- Name " + document.getId() + " => " + document.getData());
+        if(true){
+            Log.d(TAG, "Updating List");
+            db.collection("leagues")
+                    .whereArrayContains("participantsid", user.getUid())
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+
+                                leagueList = new ArrayList<>();
+                                leagueStringList = new ArrayList<>();
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    League league = document.toObject(League.class);
+                                    league.setId(document.getId());
+                                    leagueList.add(league);
+                                    leagueStringList.add(league.getName());
+                                    Log.d(TAG, league.getName() + " <- Name " + document.getId() + " => " + document.getData());
+                                }
+                                //ArrayAdapter
+                                if(isAdded()){
+                                    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1, leagueStringList);
+                                    setListAdapter(arrayAdapter);
+                                }
+
+                            } else {
+                                Log.d(TAG, "Error getting documents: ", task.getException());
                             }
-                            //ArrayAdapter
-                            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1, leagueStringList);
-                            setListAdapter(arrayAdapter);
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
                         }
-                    }
-                });
+                    });
+
+        }
     }
 
     @Override
@@ -79,7 +91,6 @@ public class LeagueFragment extends ListFragment{
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        //Toast.makeText(getActivity(), "Item: " + leagueList.get(position).getId(), Toast.LENGTH_SHORT).show();
         Intent i = new Intent(getActivity(), GameLog.class);
 
         i.putExtra("LeagueId", leagueList.get(position).getId());
@@ -92,7 +103,8 @@ public class LeagueFragment extends ListFragment{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         setHasOptionsMenu(true);
-
+        toolbarTitle = getActivity().findViewById(R.id.toolbartitle);
+        toolbarTitle.setText("Leagues");
         return inflater.inflate(R.layout.league, container, false);
     }
 }

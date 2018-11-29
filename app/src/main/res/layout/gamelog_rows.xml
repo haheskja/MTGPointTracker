@@ -4,17 +4,17 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:padding="4dp">
+    android:padding="16dp">
     <TextView
         android:id="@+id/gameNum"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:text="Game1"
         android:textSize="18sp"
-        android:layout_marginTop="20dp"
         android:layout_marginLeft="16dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:textStyle="bold"
         />
     <TextView
         android:id="@+id/gameWin"
@@ -24,6 +24,7 @@
         app:layout_constraintStart_toEndOf="@id/guideline"
         app:layout_constraintBottom_toBottomOf="@id/gameNum"
         android:textAlignment="center"
+        android:textStyle="italic"
         />
     <TextView
         android:id="@+id/par_1"

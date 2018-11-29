@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#303030"
     tools:context=".GameFragment">
 
     <TextView
@@ -27,6 +26,8 @@
         android:text="Player 1"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/ver_guideline"
+        android:gravity="center"
         style="@style/PlayerText"
         />
     <Button
@@ -48,6 +49,8 @@
         android:text="Player 2"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="@id/ver_guideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:gravity="center"
         style="@style/PlayerText"
         />
     <Button
@@ -69,6 +72,8 @@
         android:text="Player 3"
         app:layout_constraintTop_toTopOf="@id/hor_guideline"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/ver_guideline"
+        android:gravity="center"
         style="@style/PlayerText"
         />
     <Button
@@ -90,6 +95,8 @@
         android:text="Player 4"
         app:layout_constraintTop_toTopOf="@id/hor_guideline"
         app:layout_constraintStart_toStartOf="@id/ver_guideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:gravity="center"
         style="@style/PlayerText"
         />
     <Button

@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#303030"
     tools:context=".LeagueNewActivity">
+
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -19,6 +23,8 @@
             />
 
     </android.support.v7.widget.Toolbar>
+
+
 
     <TextView
         android:id="@+id/show_name"
@@ -38,32 +44,42 @@
         app:layout_constraintStart_toStartOf="parent"
         style="@style/InputBoxes"
         />
+
     <TextView
-        android:id="@+id/show_par"
+        android:id="@+id/num_games"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Participants"
+        android:text="Number of games"
         app:layout_constraintTop_toBottomOf="@id/input_name"
         app:layout_constraintStart_toStartOf="parent"
         style="@style/LabelText"
         />
     <EditText
-        android:id="@+id/input_par_1"
+        android:id="@+id/input_games"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Participant 1 (your username)"
-        app:layout_constraintTop_toBottomOf="@id/show_par"
+        app:layout_constraintTop_toBottomOf="@id/num_games"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:inputType="number"
         style="@style/InputBoxes"
-
         />
+    <TextView
+        android:id="@+id/show_par"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Your opponents"
+        app:layout_constraintTop_toBottomOf="@id/input_games"
+        app:layout_constraintStart_toStartOf="parent"
+        style="@style/LabelText"
+        />
+
     <EditText
         android:id="@+id/input_par_2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Participant 2 (their username)"
-        app:layout_constraintTop_toBottomOf="@id/input_par_1"
+        android:hint="Player 1"
+        app:layout_constraintTop_toBottomOf="@id/show_par"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         style="@style/InputBoxes"
@@ -73,7 +89,7 @@
         android:id="@+id/input_par_3"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Participant 3 (their username)"
+        android:hint="Player 2"
         app:layout_constraintTop_toBottomOf="@id/input_par_2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -84,7 +100,7 @@
         android:id="@+id/input_par_4"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Participant 4 (their username)"
+        android:hint="Player 3"
         app:layout_constraintTop_toBottomOf="@id/input_par_3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -98,12 +114,13 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="18dp"
-        android:background="#4286f4"
-        android:onClick="createLeague"
+        style="@style/ButtonStyleAccent"
+        android:onClick="createLeagueButton"
         android:text="Create"
-        android:textColor="#ffffff"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/input_par_4" />
 
 
 </android.support.constraint.ConstraintLayout>
+</ScrollView>
+

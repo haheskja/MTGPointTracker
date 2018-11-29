@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/first"
+        style="@style/LabelTextAlert"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="First place"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <Spinner
+        android:id="@+id/spinnerFirst"
+        android:layout_width="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/first"
+        app:layout_constraintEnd_toEndOf="@id/guideline"
+        android:layout_height="wrap_content"
+        />
+
+    <TextView
+        android:id="@+id/second"
+        style="@style/LabelTextAlert"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Second place"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/spinnerFirst" />
+    <Spinner
+        android:id="@+id/spinnerSecond"
+        android:layout_width="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/second"
+        app:layout_constraintEnd_toEndOf="@id/guideline"
+        android:layout_height="wrap_content"
+        />
+
+    <TextView
+        android:id="@+id/third"
+        style="@style/LabelTextAlert"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Third place"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/spinnerSecond" />
+    <Spinner
+        android:id="@+id/spinnerThird"
+        android:layout_width="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/third"
+        app:layout_constraintEnd_toEndOf="@id/guideline"
+        android:layout_height="wrap_content"
+        />
+
+    <TextView
+        android:id="@+id/fourth"
+        style="@style/LabelTextAlert"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Fourth place"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/spinnerThird" />
+    <Spinner
+        android:id="@+id/spinnerFourth"
+        android:layout_width="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fourth"
+        app:layout_constraintEnd_toEndOf="@id/guideline"
+        android:layout_height="wrap_content"
+        />
+
+    <TextView
+        android:id="@+id/score_1"
+        style="@style/LabelText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="0dp"
+        android:text="4 points"
+        app:layout_constraintTop_toTopOf="@id/spinnerFirst"
+        app:layout_constraintBottom_toBottomOf="@id/spinnerFirst"
+        app:layout_constraintStart_toStartOf="@id/guideline"
+        />
+
+    <TextView
+        android:id="@+id/score_2"
+        style="@style/LabelText"
+        android:layout_width="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="3 points"
+        app:layout_constraintTop_toTopOf="@id/spinnerSecond"
+        app:layout_constraintBottom_toBottomOf="@id/spinnerSecond"
+        app:layout_constraintStart_toStartOf="@id/guideline"
+        />
+
+    <TextView
+        android:id="@+id/score_3"
+        style="@style/LabelText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        android:layout_marginStart="4dp"
+        android:text="2 points"
+        app:layout_constraintTop_toTopOf="@id/spinnerThird"
+        app:layout_constraintBottom_toBottomOf="@id/spinnerThird"
+        app:layout_constraintStart_toStartOf="@id/guideline"
+        />
+
+    <TextView
+        android:id="@+id/score_4"
+        style="@style/LabelText"
+        android:layout_width="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="1 point"
+        app:layout_constraintTop_toTopOf="@id/spinnerFourth"
+        app:layout_constraintBottom_toBottomOf="@id/spinnerFourth"
+        app:layout_constraintStart_toStartOf="@id/guideline"
+        />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.8" />
+
+
+
+
+</android.support.constraint.ConstraintLayout>

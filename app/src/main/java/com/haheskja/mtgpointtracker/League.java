@@ -5,6 +5,8 @@ import java.util.List;
 public class League {
     private String id;
     private String name;
+    private boolean ongoing;
+    private int numgames;
     private List<String> participants;
     private List<String> participantsid;
     private List<Integer> totalscore;
@@ -12,12 +14,14 @@ public class League {
     public League() {
     }
 
-    public League(String name, List<String> participants, List<String> participantsid, List<Integer> totalscore, String id) {
+    public League(String id, String name, boolean ongoing, int numgames, List<String> participants, List<String> participantsid, List<Integer> totalscore) {
+        this.id = id;
         this.name = name;
+        this.ongoing = ongoing;
+        this.numgames = numgames;
         this.participants = participants;
         this.participantsid = participantsid;
         this.totalscore = totalscore;
-        this.id = id;
     }
 
     public void setId(String id) {
@@ -30,6 +34,14 @@ public class League {
 
     public void setParticipants(List<String> participants) {
         this.participants = participants;
+    }
+
+    public boolean isOngoing() {
+        return ongoing;
+    }
+
+    public int getNumgames() {
+        return numgames;
     }
 
     public String getId(){
