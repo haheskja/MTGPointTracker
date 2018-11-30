@@ -17,15 +17,20 @@
             />
     </android.support.v7.widget.Toolbar>
 
-
+    <android.support.constraint.Guideline
+        android:id="@+id/ver_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
 
     <TextView
         android:id="@+id/status"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="@id/ver_guideline"
+        android:layout_marginStart="16dp"
         android:textColor="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="@id/show_name"
         style="@style/LabelText"
@@ -35,10 +40,10 @@
         android:id="@+id/show_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:text="@string/leaderboard"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintBottom_toBottomOf="@id/status"
         app:layout_constraintStart_toStartOf="parent"
-        android:text="@string/leaderboard"
         style="@style/LabelText"
         />
 
@@ -59,7 +64,7 @@
         android:layout_height="0dp"
         android:gravity="end"
         android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/ver_guideline"
         app:layout_constraintBottom_toBottomOf="@id/leaderboard_name_1"
 
         app:layout_constraintTop_toBottomOf="@id/show_name"
@@ -81,7 +86,7 @@
         android:layout_height="0dp"
         android:gravity="end"
         android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/ver_guideline"
         app:layout_constraintBottom_toBottomOf="@id/leaderboard_name_2"
 
         app:layout_constraintTop_toBottomOf="@id/leaderboard_score_1"
@@ -103,7 +108,7 @@
         android:layout_height="0dp"
         android:gravity="end"
         android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/ver_guideline"
         app:layout_constraintBottom_toBottomOf="@id/leaderboard_name_3"
         app:layout_constraintTop_toBottomOf="@id/leaderboard_score_2"
         />
@@ -124,7 +129,7 @@
         android:layout_height="0dp"
         android:gravity="end"
         android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/ver_guideline"
         app:layout_constraintBottom_toBottomOf="@id/leaderboard_name_4"
         app:layout_constraintTop_toBottomOf="@id/leaderboard_score_3"
         />
@@ -139,10 +144,11 @@
         />
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycleView"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@id/num_games"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/ver_guideline"
         app:layout_constraintBottom_toBottomOf="parent"
         android:background="@color/listBackground"
         >

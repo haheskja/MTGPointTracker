@@ -1,18 +1,51 @@
 <resources>
-    <string name="app_name">MTGPointTracker</string>
+    <string name="app_name">EDHTracker</string>
     <string name="loginUsername">Username</string>
     <string name="loginEmail">Email</string>
     <string name="loginPassword">Password</string>
     <string name="noUserBtn">Don\'t have an account yet?</string>
     <string name="loginBtn">Log in</string>
     <string name="signupBtn">Sign up</string>
+    <string name="add">Add new</string>
     <string name="game">Current game</string>
     <string name="leagues">Leagues</string>
+    <string name="addLeague">Add a league</string>
+    <string name="leaderboard">Leaderboard</string>
+    <string name="leagueName">League name</string>
+    <string name="leagueGames">Number of games</string>
+    <string name="leagueOpp">Your opponents usernames</string>
     <string name="rules">Rules</string>
     <string name="friends">Friends</string>
     <string name="settings">Settings</string>
     <string name="about">About</string>
     <string name="logout">Log out</string>
+    <string name="opp1">Player 1</string>
+    <string name="opp2">Player 2</string>
+    <string name="opp3">Player 3</string>
+    <string name="newButton">Create</string>
+
+
+    <string name="noGameProgress">No game in progress, go to a league and add a new game</string>
+    <string name="gameAlert">Who won the match?</string>
+    <string name="gameAlertYes">Save</string>
+    <string name="gameAlertNo">Cancel</string>
+    <string name="chooseRule">Choose a rule</string>
+    <string name="searchTime">Search time in seconds:</string>
+    <string name="currentGame">Current game</string>
+    <string name="alertOk">Ok</string>
+
+    <string name="firstPlace">First place</string>
+    <string name="secondPlace">Second place</string>
+    <string name="thirdPlace">Third place</string>
+    <string name="fourthPlace">Fourth place</string>
+
+    <string name="firstPoints">4 points</string>
+    <string name="secondPoints">3 points</string>
+    <string name="thirdPoints">2 points</string>
+    <string name="fourthPoints">1 points</string>
+
+    <string name="finishGame">Finish</string>
+    <string name="undo">Undo last action</string>
 
     <string name="gamelog_num_games">Played %1$d/%2$d games</string>
     <string name="gamelog_status">Status: %1$s</string>

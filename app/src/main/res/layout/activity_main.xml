@@ -19,7 +19,7 @@
             <TextView
                 style="@style/ToolbarTitle"
                 android:id="@+id/toolbartitle"
-                android:text="Leagues"
+                android:text="@string/leagues"
                 />
         </android.support.v7.widget.Toolbar>
 

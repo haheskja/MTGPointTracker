@@ -21,11 +21,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
-    TextView username, email, password;
-    FirebaseAuth mAuth;
-    FirebaseFirestore db;
-
-    public static String userId;
+    private TextView username, email, password;
+    private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
+    private boolean isLoading = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,12 +43,11 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         startApp(currentUser);
     }
 
-    public void startApp(FirebaseUser currentUser){
+    private void startApp(FirebaseUser currentUser){
         if(currentUser != null){
             Intent i = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(i);
@@ -57,7 +55,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    public void findUsername(final FirebaseUser user){
+    private void findUsername(final FirebaseUser user){
         db.collection("users").document(user.getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -70,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    public void checkCredentials(String email, String password){
+    private void checkCredentials(String email, String password){
         mAuth.signInWithEmailAndPassword(email.toLowerCase(), password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -86,6 +84,7 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(LoginActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                             startApp(null);
+                            isLoading = false;
                         }
 
                         // ...
@@ -95,7 +94,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void logIn(View v){
-        if(validate()){
+        if(validate() && !isLoading){
+            isLoading = true;
             checkCredentials(email.getText().toString().trim(), password.getText().toString().trim());
         }
 
@@ -114,7 +114,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    public void goToRegister(View view){
+    private void goToRegister(View view){
         Intent i = new Intent(this, SignupActivity.class);
         startActivity(i);
     }

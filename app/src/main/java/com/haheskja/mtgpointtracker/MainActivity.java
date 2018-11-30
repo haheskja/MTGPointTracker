@@ -23,7 +23,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private NavigationView navigationView;
-    TextView toolbarTitle;
+    private TextView toolbarTitle;
     public static boolean dataChanged = false;
 
     @Override
@@ -137,20 +137,20 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void signOut(){
+    private void signOut(){
         FirebaseAuth.getInstance().signOut();
         Intent i = new Intent(this, LoginActivity.class);
         startActivity(i);
         finish();
     }
 
-    public void startLeagueFragment(){
+    private void startLeagueFragment(){
         LeagueFragment newFragment = new LeagueFragment();
         replaceFragment(newFragment);
 
     }
 
-    public void startGameFragment(Intent data){
+    private void startGameFragment(Intent data){
         GameFragment newFragment = new GameFragment();
         if(data != null){
             Log.d("GameFragment", "Putting arguments");
@@ -219,7 +219,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void createLeague(){
+    private void createLeague(){
         Intent i = new Intent(this, LeagueNewActivity.class);
         startActivity(i);
     }

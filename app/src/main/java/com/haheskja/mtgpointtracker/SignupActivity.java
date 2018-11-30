@@ -27,9 +27,10 @@ import java.util.regex.Pattern;
 
 public class SignupActivity extends AppCompatActivity {
     private static final String TAG = "SignupActivity";
-    TextView etUsername, etEmail, etPassword;
+    private TextView etUsername, etEmail, etPassword;
     private FirebaseAuth mAuth;
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private boolean isLoading = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +44,7 @@ public class SignupActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
     }
 
-    public void createAccount(final String username, final String email, final String password){
+    private void createAccount(final String username, final String email, final String password){
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -71,7 +72,7 @@ public class SignupActivity extends AppCompatActivity {
                 });
     }
 
-    public void startApp(FirebaseUser currentUser){
+    private void startApp(FirebaseUser currentUser){
         if(currentUser != null){
             Intent i = new Intent(this, MainActivity.class);
             startActivity(i);
@@ -84,7 +85,8 @@ public class SignupActivity extends AppCompatActivity {
         String email = etEmail.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
 
-        if(validate(username, email, password)){
+        if(validate(username, email, password) && !isLoading){
+            isLoading = true;
             checkIfUsernameExist(username, email, password);
         }
 

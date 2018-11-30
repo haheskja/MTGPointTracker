@@ -36,10 +36,10 @@ import java.util.Map;
 
 public class LeagueNewActivity extends AppCompatActivity {
     private static final String TAG = "LeagueNewActivity";
-    EditText etLeagueName, par_2, par_3, par_4, num_games;
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
-    FirebaseAuth mAuth;
-    FirebaseUser user;
+    private EditText etLeagueName, par_2, par_3, par_4, num_games;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirebaseAuth mAuth;
+    private FirebaseUser user;
 
 
     @Override
@@ -80,7 +80,7 @@ public class LeagueNewActivity extends AppCompatActivity {
         }
     }
 
-    public boolean validate(String leagueName, String numGames, String par1, String par2, String par3, String par4){
+    private boolean validate(String leagueName, String numGames, String par1, String par2, String par3, String par4){
         if(!TextUtils.isEmpty(par1) &&
                 !TextUtils.isEmpty(par2) &&
                 !TextUtils.isEmpty(par3) &&
@@ -96,12 +96,12 @@ public class LeagueNewActivity extends AppCompatActivity {
         return false;
     }
 
-    public void goBack(){
+    private void goBack(){
         MainActivity.dataChanged = true;
         finish();
     }
 
-    public void createLeague(final String leagueName, final String numGames, String par1, String par2, String par3, String par4){
+    private void createLeague(final String leagueName, final String numGames, String par1, String par2, String par3, String par4){
         final List<String> participantList = new ArrayList<>();
         final List<String> participantIDList = new ArrayList<>();
         final List<String> finalPartList = new ArrayList<>();
@@ -175,7 +175,7 @@ public class LeagueNewActivity extends AppCompatActivity {
         });
     }
 
-
+    @Override
     public boolean onCreateOptionsMenu(Menu menu){
         return true;
     }

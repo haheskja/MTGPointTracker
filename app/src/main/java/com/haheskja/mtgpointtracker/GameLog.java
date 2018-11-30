@@ -41,16 +41,16 @@ public class GameLog extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private ArrayList<Game> gameArrayList;
-    FirebaseFirestore db;
+    private FirebaseFirestore db;
     private FirebaseAuth mAuth;
-    League league;
-    TextView usr_1, usr_2, usr_3, usr_4, score_1, score_2, score_3, score_4, toolbarTitle, numGames, status;
-    List<String> parList;
-    List<Integer> totalScore;
-    String ongoing;
-    boolean isLoaded = false;
-    boolean isOngoing = false;
-    int gameNum;
+    private League league;
+    private TextView usr_1, usr_2, usr_3, usr_4, score_1, score_2, score_3, score_4, toolbarTitle, numGames, status;
+    private List<String> parList;
+    private List<Integer> totalScore;
+    private String ongoing;
+    private boolean isLoaded = false;
+    private boolean isOngoing = false;
+    private int gameNum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,7 +100,7 @@ public class GameLog extends AppCompatActivity {
         getLeague();
     }
 
-    public void getLeague(){
+    private void getLeague(){
         DocumentReference docRef = db.collection("leagues").document(getIntent().getStringExtra("LeagueId"));
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
@@ -117,7 +117,7 @@ public class GameLog extends AppCompatActivity {
         });
     }
 
-    public void getGames(){
+    private void getGames(){
         db.collection("leagues").document(getIntent().getStringExtra("LeagueId"))
                 .collection("games")
                 .orderBy("gamename", Query.Direction.DESCENDING)
@@ -141,7 +141,7 @@ public class GameLog extends AppCompatActivity {
                 });
     }
 
-    public void updateUI(List<User> user){
+    private void updateUI(List<User> user){
         if(league.isOngoing()){
             ongoing = "Ongoing";
         }
@@ -164,7 +164,7 @@ public class GameLog extends AppCompatActivity {
 
     }
 
-    public List<User> sortLeaderboard(){
+    private List<User> sortLeaderboard(){
         List<User> user = new ArrayList<>();
         for(int i = 0; i < 4; i++){
             User newUser = new User(totalScore.get(i), parList.get(i));
@@ -174,9 +174,9 @@ public class GameLog extends AppCompatActivity {
         return user;
     }
 
-    public void overwriteGameDialog(){
+    private void overwriteGameDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("You have a game in progress, are you sure you want to overwrite?");
+        builder.setTitle("Overwrite game in progress?");
 
         builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
@@ -194,7 +194,7 @@ public class GameLog extends AppCompatActivity {
         builder.show();
     }
 
-    public void startGameFragment(){
+    private void startGameFragment(){
         Intent i = new Intent();
 
         //Send league name, id, and next gamenumber
@@ -219,7 +219,7 @@ public class GameLog extends AppCompatActivity {
         finish();
     }
 
-    public void startGame(){
+    private void startGame(){
         if(league.isOngoing()){
             if(getSharedPreferences(mAuth.getCurrentUser().getUid(), MODE_PRIVATE).getBoolean("IsOngoing", false)){
                 overwriteGameDialog();
@@ -230,6 +230,7 @@ public class GameLog extends AppCompatActivity {
         }
     }
 
+    @Override
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;

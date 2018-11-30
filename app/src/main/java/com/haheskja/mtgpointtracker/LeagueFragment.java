@@ -34,12 +34,12 @@ import java.util.List;
 
 public class LeagueFragment extends ListFragment{
     private static final String TAG = "LeagueFragment";
-    TextView toolbarTitle;
-    FirebaseFirestore db;
-    FirebaseAuth mAuth;
-    List<League> leagueList;
-    List<String> leagueStringList;
-    List<Integer> scoreList;
+    private TextView toolbarTitle;
+    private FirebaseFirestore db;
+    private FirebaseAuth mAuth;
+    private List<League> leagueList;
+    private List<String> leagueStringList;
+    private List<Integer> scoreList;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -49,38 +49,36 @@ public class LeagueFragment extends ListFragment{
         FirebaseUser user = mAuth.getCurrentUser();
 
 
-        if(true){
-            Log.d(TAG, "Updating List");
-            db.collection("leagues")
-                    .whereArrayContains("participantsid", user.getUid())
-                    .get()
-                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful()) {
+        Log.d(TAG, "Updating List");
+        db.collection("leagues")
+                .whereArrayContains("participantsid", user.getUid())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
 
-                                leagueList = new ArrayList<>();
-                                leagueStringList = new ArrayList<>();
-                                for (QueryDocumentSnapshot document : task.getResult()) {
-                                    League league = document.toObject(League.class);
-                                    league.setId(document.getId());
-                                    leagueList.add(league);
-                                    leagueStringList.add(league.getName());
-                                    Log.d(TAG, league.getName() + " <- Name " + document.getId() + " => " + document.getData());
-                                }
-                                //ArrayAdapter
-                                if(isAdded()){
-                                    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1, leagueStringList);
-                                    setListAdapter(arrayAdapter);
-                                }
-
-                            } else {
-                                Log.d(TAG, "Error getting documents: ", task.getException());
+                            leagueList = new ArrayList<>();
+                            leagueStringList = new ArrayList<>();
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                League league = document.toObject(League.class);
+                                league.setId(document.getId());
+                                leagueList.add(league);
+                                leagueStringList.add(league.getName());
+                                Log.d(TAG, league.getName() + " <- Name " + document.getId() + " => " + document.getData());
                             }
-                        }
-                    });
+                            //ArrayAdapter
+                            if(isAdded()){
+                                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1, leagueStringList);
+                                setListAdapter(arrayAdapter);
+                            }
 
-        }
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+
     }
 
     @Override

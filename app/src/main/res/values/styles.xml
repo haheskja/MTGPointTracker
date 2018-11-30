@@ -6,7 +6,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:colorBackground">@color/mainBackground</item>
-        <item name="android:navigationBarColor">@color/mainBackground</item>
+        <item name="android:navigationBarColor">@color/colorPrimaryDark</item>
         <item name="android:actionOverflowButtonStyle">@style/AppTheme.OverFlow</item>
     </style>
     <style name="NoActionBar" parent="AppTheme">

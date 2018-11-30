@@ -18,6 +18,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="30dp"
+        android:contentDescription="@string/app_name"
         android:elevation="20dp"/>
 
     <TextView
@@ -41,6 +42,8 @@
         app:layout_constraintBottom_toTopOf="@id/password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:autofillHints="email"
+        android:inputType="textEmailAddress"
         style="@style/LoginFields"
         android:layout_marginBottom="10dp"
         />
@@ -50,6 +53,7 @@
         android:layout_height="wrap_content"
         android:hint="@string/loginPassword"
         android:inputType="textPassword"
+        android:autofillHints="password"
         app:layout_constraintBottom_toTopOf="@id/loginbtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -14,6 +14,7 @@
         android:layout_height="wrap_content"
         android:scaleType="fitCenter"
         android:adjustViewBounds="true"
+        android:contentDescription="@string/app_name"
         android:src="@drawable/logo"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,6 +43,8 @@
         app:layout_constraintBottom_toTopOf="@id/email"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:autofillHints="username"
+        android:inputType="text"
         android:singleLine="true"
         style="@style/LoginFields"
         android:layout_marginBottom="10dp"
@@ -54,6 +57,8 @@
         app:layout_constraintBottom_toTopOf="@id/password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:autofillHints="email"
+        android:inputType="textEmailAddress"
         style="@style/LoginFields"
         android:layout_marginBottom="10dp"
         />
@@ -66,6 +71,7 @@
         app:layout_constraintBottom_toTopOf="@id/signupbtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:autofillHints="password"
         android:layout_marginBottom="18dp"
         style="@style/LoginFields"
         />

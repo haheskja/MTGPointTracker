@@ -52,47 +52,46 @@ import java.util.Set;
 
 public class GameFragment extends Fragment {
     private static final String TAG = "GameFragment";
-    TinyDB tinydb;
+    private TinyDB tinydb;
 
 
     //Objects
     private FirebaseAuth mAuth;
-    FirebaseFirestore db;
-    SharedPreferences prefs;
-    SharedPreferences.Editor prefEditor;
+    private FirebaseFirestore db;
+    private SharedPreferences prefs;
+    private SharedPreferences.Editor prefEditor;
 
     //XML fields
-    Button button1, button2, button3, button4;
-    TextView par_1_view, par_2_view, par_3_view, par_4_view, noCurrentGame, toolbarTitle;
+    private Button button1, button2, button3, button4;
+    private TextView par_1_view, par_2_view, par_3_view, par_4_view, noCurrentGame, toolbarTitle;
 
     //Game fields
-    List<Integer> totalScore;
-    List<Integer> currentScore;
-    List<Integer> currentScoreOld;
-    List<String> playersUsername;
-    String leagueName, leagueId;
-    int gameNum;
-    int numGames;
-    int returnNumber = 0;
-    boolean hasUndone = false;
-    boolean isLoaded = false;
+    private List<Integer> totalScore;
+    private List<Integer> currentScore;
+    private List<Integer> currentScoreOld;
+    private List<String> playersUsername;
+    private String leagueName, leagueId;
+    private int gameNum;
+    private int numGames;
+    private boolean hasUndone = false;
+    private boolean isLoaded = false;
 
-    ArrayList<Rule> par1rules;
-    ArrayList<Rule> par2rules;
-    ArrayList<Rule> par3rules;
-    ArrayList<Rule> par4rules;
+    private ArrayList<Rule> par1rules;
+    private ArrayList<Rule> par2rules;
+    private ArrayList<Rule> par3rules;
+    private ArrayList<Rule> par4rules;
 
-    ArrayList<Rule> par1rulesOld;
-    ArrayList<Rule> par2rulesOld;
-    ArrayList<Rule> par3rulesOld;
-    ArrayList<Rule> par4rulesOld;
+    private ArrayList<Rule> par1rulesOld;
+    private ArrayList<Rule> par2rulesOld;
+    private ArrayList<Rule> par3rulesOld;
+    private ArrayList<Rule> par4rulesOld;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
     }
 
-    public void initializeFromShared(){
+    private void initializeFromShared(){
         Log.d(TAG, "In initializeFromShared");
 
         //Set league name, id and gamenumber
@@ -129,7 +128,7 @@ public class GameFragment extends Fragment {
 
     }
 
-    public void initializeFromArgs(){
+    private void initializeFromArgs(){
         Log.d(TAG, "In initializeFromArgs");
 
         //Store league name, id and gamenumber
@@ -165,7 +164,7 @@ public class GameFragment extends Fragment {
         prefEditor.putBoolean("IsOngoing", true).apply();
     }
 
-    public void createRules(){
+    private void createRules(){
         Rule[] rules = {
                 new Rule("+1 First Blood", 1, true, false),
                 new Rule("+1 Saving another player", 1, false, false),
@@ -244,7 +243,7 @@ public class GameFragment extends Fragment {
         par_3_view = view.findViewById(R.id.par_3_name);
         par_4_view = view.findViewById(R.id.par_4_name);
         toolbarTitle = getActivity().findViewById(R.id.toolbartitle);
-        toolbarTitle.setText("Current game");
+        toolbarTitle.setText(getActivity().getResources().getString(R.string.currentGame));
         noCurrentGame = view.findViewById(R.id.noCurrentGame);
 
         button1.setOnClickListener(new View.OnClickListener()
@@ -310,7 +309,7 @@ public class GameFragment extends Fragment {
         return view;
     }
 
-    public void initializeFields(){
+    private void initializeFields(){
         par_1_view.setText(playersUsername.get(0));
         par_2_view.setText(playersUsername.get(1));
         par_3_view.setText(playersUsername.get(2));
@@ -321,7 +320,7 @@ public class GameFragment extends Fragment {
         button4.setText(Integer.toString(currentScore.get(3)));
     }
 
-    public void calcPoints(int a, int count){
+    private void calcPoints(int a, int count){
         switch (a){
             case 1:
                 currentScore.set(0, currentScore.get(0) + count);
@@ -342,7 +341,7 @@ public class GameFragment extends Fragment {
         }
     }
 
-    public int getUserNumber(String user){
+    private int getUserNumber(String user){
         for(int i = 0; i < playersUsername.size(); i++){
             if(user.equals(playersUsername.get(i))){
                 int b = i+1;
@@ -352,7 +351,7 @@ public class GameFragment extends Fragment {
         return 0;
     }
 
-    public void passInfo(String user1, String user2, String user3, String user4){
+    private void passInfo(String user1, String user2, String user3, String user4){
         Set<String> spinner1Comp = new HashSet<String>();
         spinner1Comp.add(user2);
         spinner1Comp.add(user3);
@@ -385,7 +384,7 @@ public class GameFragment extends Fragment {
         }
     }
 
-    public void selectWinner(){
+    private void selectWinner(){
         LayoutInflater factory = LayoutInflater.from(getActivity());
         final View textEntryView = factory.inflate(R.layout.select_winners, null);
         final Spinner spinner1 = textEntryView.findViewById(R.id.spinnerFirst);
@@ -405,14 +404,14 @@ public class GameFragment extends Fragment {
 
 
         final AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
-        alert.setTitle("Who won the match?").setView(textEntryView).setPositiveButton("Save",
+        alert.setTitle(getActivity().getResources().getString(R.string.gameAlert)).setView(textEntryView).setPositiveButton(getActivity().getResources().getString(R.string.gameAlertYes),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,
                                         int whichButton) {
                         passInfo(spinner1.getSelectedItem().toString(), spinner2.getSelectedItem().toString(),
                                 spinner3.getSelectedItem().toString(), spinner4.getSelectedItem().toString());
                     }
-                }).setNegativeButton("Cancel",
+                }).setNegativeButton(getActivity().getResources().getString(R.string.gameAlertNo),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,
                                         int whichButton) {
@@ -423,7 +422,7 @@ public class GameFragment extends Fragment {
 
     }
 
-    public void saveToDatabase(String winner){
+    private void saveToDatabase(String winner){
         String gameName = "Game" + gameNum;
 
         Map<String, Object> newGame = new HashMap<>();
@@ -466,7 +465,7 @@ public class GameFragment extends Fragment {
                 });
     }
 
-    public void finishGame(){
+    private void finishGame(){
         prefEditor.putBoolean("IsOngoing", false).apply();
         Activity act = getActivity();
         if (act instanceof MainActivity){
@@ -474,9 +473,9 @@ public class GameFragment extends Fragment {
         }
     }
 
-    public void showDialog(final int button, final List<Rule> rulesList){
+    private void showDialog(final int button, final List<Rule> rulesList){
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Choose a rule");
+        builder.setTitle(getActivity().getResources().getString(R.string.chooseRule));
         final String[] rules = new String[rulesList.size()];
         for(int i = 0; i < rulesList.size(); i++){
             rules[i] = rulesList.get(i).getText();
@@ -501,14 +500,14 @@ public class GameFragment extends Fragment {
         dialog.show();
     }
 
-    public void pointsFromTimeOnClick(final int button){
+    private void pointsFromTimeOnClick(final int button){
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Enter search time in seconds:");
+        builder.setTitle(getActivity().getResources().getString(R.string.searchTime));
 
         final EditText input = new EditText(getActivity());
         input.setInputType(InputType.TYPE_CLASS_NUMBER);
         builder.setView(input);
-        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(getActivity().getResources().getString(R.string.alertOk), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if(!isEmpty(input)){
@@ -519,7 +518,7 @@ public class GameFragment extends Fragment {
                 }
             }
         });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(getActivity().getResources().getString(R.string.gameAlertNo), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
@@ -529,7 +528,7 @@ public class GameFragment extends Fragment {
         builder.show();
     }
 
-    public void pointsFromTime(int button, int number){
+    private void pointsFromTime(int button, int number){
         int points = 0;
         if(number > 40){
             points--;
@@ -542,7 +541,7 @@ public class GameFragment extends Fragment {
         calcPoints(button, points);
     }
 
-    public void changeLists(List<Rule> rulesList, int which){
+    private void changeLists(List<Rule> rulesList, int which){
         if(rulesList.get(which).isRemoveFromAll()){
             par1rules.remove(which);
             par2rules.remove(which);
@@ -554,7 +553,7 @@ public class GameFragment extends Fragment {
         }
     }
 
-    public void saveLastAction(){
+    private void saveLastAction(){
         hasUndone = false;
         par1rulesOld = new ArrayList<>(par1rules);
         par2rulesOld = new ArrayList<>(par2rules);
@@ -563,13 +562,13 @@ public class GameFragment extends Fragment {
         currentScoreOld = new ArrayList<>(currentScore);
     }
 
-    public void undoLastAction(){
+    private void undoLastAction(){
         if(par1rulesOld == null && par2rulesOld == null && par3rulesOld == null && par4rulesOld == null || hasUndone){
             Toast.makeText(getActivity(), "No action to undo.", Toast.LENGTH_SHORT).show();
             return;
         }
         hasUndone = true;
-        Toast.makeText(getActivity(), "Undoing.", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "Undoing", Toast.LENGTH_SHORT).show();
         par1rules = par1rulesOld;
         par2rules = par2rulesOld;
         par3rules = par3rulesOld;
